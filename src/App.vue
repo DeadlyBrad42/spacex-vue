@@ -7,8 +7,9 @@
 				<toolbox>
 				</toolbox>
 
-				<launch-manifest>
-				</launch-manifest>
+				<launch-manifest
+					v-bind:launches="filteredLaunches"
+				></launch-manifest>
 			</div>
 
 		</div>
@@ -20,10 +21,70 @@ import toolbox from './components/toolbox/toolbox.vue';
 import launchManifest from './components/launch-manifest/launch-manifest.vue';
 
 export default {
-	name: 'App',
 	components: {
 		launchManifest,
 		toolbox,
+	},
+	data: function() {
+		return {
+			launchApi: 'https://api.spacexdata.com/v2/launches',
+			filterOptions: {
+				landed: true,
+				reused: false,
+				attachment: false,
+			},
+			launches: [],
+		};
+	},
+	created: function() {
+		this.loadData();
+	},
+	methods: {
+		loadData: function() {
+			fetch(this.launchApi).then(response => {
+				response.json().then(json => {
+					this.launches = json;
+				});
+			});
+		}
+	},
+	computed: {
+		filteredLaunches: function () {
+			let filteredLaunches = new Array();
+
+			for (const launch of this.launches) {
+				// Sortable options
+				let landedSucessfully = launch.launch_success;
+				let wasReused = launch.reuse.capsule
+						|| launch.reuse.core
+						|| launch.reuse.fairings
+						|| launch.reuse.side_core1
+						|| launch.reuse.side_core2;
+				let isReddit = false;
+
+				let launchDate = new Date(launch.launch_date_utc);
+
+				if (
+					(!this.filterOptions.landed || (this.filterOptions.landed && landedSucessfully))
+					&& (!this.filterOptions.reused || (this.filterOptions.reused && wasReused))
+					&& (!this.filterOptions.attachment || (this.filterOptions.attachment && isReddit))
+				) {
+					filteredLaunches.push({
+						badgeUrl: launch.links.mission_patch_small || '../../assets/images/placeholder.png',
+						rocketName: launch.rocket.rocket_name,
+						rocketType: launch.rocket.rocket_type,
+						date: `${launchDate.getMonth()}/${launchDate.getDate()}/${launchDate.getFullYear()}`,
+						details: launch.details,
+						id: launch.flight_number,
+
+						landedSucessfully: landedSucessfully,
+						wasReused: wasReused
+					});
+				}
+			}
+
+			return filteredLaunches;
+		}
 	}
 }
 </script>

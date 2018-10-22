@@ -1,16 +1,11 @@
 <template>
 	<div class="manifest">
 		<launch-manifest-header></launch-manifest-header>
-
 		<ul>
 			<launch-manifest-row
-				v-bind:launchData="{ badgeUrl: 'Falcon', rocketName: 'Falcon', rocketType: 'Merlin A',  launchDate: '03/25/2005', details: 'Engine failure at 33 seconds and less of vehicle', id: 1 }"
-			></launch-manifest-row>
-			<launch-manifest-row
-				v-bind:launchData="{ badgeUrl: 'Falcon', rocketName: 'Falcon', rocketType: 'Merlin A',  launchDate: '03/25/2005', details: 'Engine failure at 33 seconds and less of vehicle', id: 1 }"
-			></launch-manifest-row>
-			<launch-manifest-row
-				v-bind:launchData="{ badgeUrl: 'Falcon', rocketName: 'Falcon', rocketType: 'Merlin A',  launchDate: '03/25/2005', details: 'Engine failure at 33 seconds and less of vehicle', id: 1 }"
+				v-for="launch in launches"
+				v-bind:key="launch.id"
+				v-bind:launchData="launch"
 			></launch-manifest-row>
 		</ul>
 	</div>
@@ -26,7 +21,8 @@ export default {
 		launchManifestRow,
 	},
 	props: {
-	}
+		launches: Array
+	},
 }
 </script>
 

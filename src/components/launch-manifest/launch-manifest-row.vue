@@ -1,11 +1,11 @@
 <template>
 	<li>
 		<span class="cell-data">
-			<img src="../../assets/images/placeholder.png" />
+			<img v-bind:src="launchData.badgeUrl" />
 		</span>
 		<span class="cell-label">{{ launchData.rocketName }}</span>
 		<span class="cell-label">{{ launchData.rocketType }}</span>
-		<span class="cell-label">{{ launchData.launchDate }}</span>
+		<span class="cell-label">{{ launchData.date }}</span>
 		<span class="cell-desc">{{ launchData.details }}</span>
 		<span class="cell-data">{{ launchData.id }}</span>
 		<span class="cell-data">
@@ -22,12 +22,11 @@ module.exports = {
 				return data.badgeUrl
 					&& data.rocketName
 					&& data.rocketType
-					&& data.launchDate
-					&& data.details
+					&& data.date
 					&& data.id;
 			}
 		}
-	}
+	},
 }
 </script>
 
@@ -47,6 +46,8 @@ module.exports = {
 		.cell-data {
 			img {
 				max-width: 85px;
+				padding: 0.65rem;
+				box-sizing: border-box;
 			}
 
 			a {
