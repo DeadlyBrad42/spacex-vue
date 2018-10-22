@@ -4,11 +4,11 @@
 			<h1>SpaceX Launches</h1>
 
 			<div class="launches">
-				<!-- <toolbox>
-				</toolbox> -->
+				<toolbox>
+				</toolbox>
 
-				<!-- TODO: Launch manifest here -->
-				<!-- <launch-manifest></launch-manifest> -->
+				<launch-manifest>
+				</launch-manifest>
 			</div>
 
 		</div>
@@ -16,16 +16,16 @@
 </template>
 
 <script>
-// import toolbox from './components/toolbox/toolbox.vue';
-// import launchManifest from './components/launch-manifest/launch-manifest.vue';
+import toolbox from './components/toolbox/toolbox.vue';
+import launchManifest from './components/launch-manifest/launch-manifest.vue';
 
-// export default {
-// 	name: 'App',
-// 	components: {
-// 		launchManifest,
-// 		toolbox,
-// 	}
-// }
+export default {
+	name: 'App',
+	components: {
+		launchManifest,
+		toolbox,
+	}
+}
 </script>
 
 <style lang="less">
@@ -33,10 +33,10 @@
 		font-family: 'Geomanist';
 		src: url('assets/fonts/geomanist-regular-webfont.eot');
 		src: url('assets/fonts/geomanist-regular-webfont.eot') format('embedded-opentype'),
-			url('assets/fonts/geomanist-regular-webfont.woff2') format('woff2'),
-			url('assets/fonts/geomanist-regular-webfont.woff') format('woff'),
-			url('assets/fonts/geomanist-regular-webfont.ttf') format('truetype'),
-			url('assets/fonts/geomanist-regular-webfont.svg') format('svg');
+		     url('assets/fonts/geomanist-regular-webfont.woff2') format('woff2'),
+		     url('assets/fonts/geomanist-regular-webfont.woff') format('woff'),
+		     url('assets/fonts/geomanist-regular-webfont.ttf') format('truetype'),
+		     url('assets/fonts/geomanist-regular-webfont.svg') format('svg');
 	}
 
 	body {

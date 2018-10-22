@@ -5,6 +5,10 @@ import App from './App';
 
 Vue.config.productionTip = false;
 
+// Register common (base) components
+import AppCheckbox from './components/common/app-checkbox.vue';
+Vue.component('app-checkbox', AppCheckbox);
+
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',
