@@ -45,7 +45,7 @@ module.exports = {
 		reloadList() {
 			this.$emit('reload-data');
 		}
-	}
+	},
 }
 </script>
 
