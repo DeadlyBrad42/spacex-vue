@@ -9,7 +9,7 @@
 		<span class="cell-desc">{{ launchData.details }}</span>
 		<span class="cell-data">{{ launchData.id }}</span>
 		<span class="cell-data">
-			<a href="#">Open Link</a>
+			<a v-if="launchData.article" @click="openLink(launchData.article)">Open Link</a>
 		</span>
 	</li>
 </template>
@@ -27,6 +27,11 @@ module.exports = {
 			}
 		}
 	},
+	methods: {
+		openLink: function(href) {
+			window.open(href, '_blank');
+		},
+	},
 }
 </script>
 
@@ -38,7 +43,7 @@ module.exports = {
 		align-items: center;
 		color: #444444;
 		background-color: rgba(255, 255, 255, 0.85);
-		/* padding: 1rem; */
+		padding: 0.25rem 0;
 		margin: 0.5rem 0;
 		border: 1px solid #FFFFFF;
 		border-radius: 0.5rem 0.5rem;
@@ -61,6 +66,7 @@ module.exports = {
 				text-indent: 100%;
 				white-space: nowrap;
 				overflow: hidden;
+				cursor: pointer;
 			}
 		}
 	}

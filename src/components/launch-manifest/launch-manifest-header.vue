@@ -10,13 +10,6 @@
 	</div>
 </template>
 
-<script>
-module.exports = {
-	props: {
-	}
-}
-</script>
-
 <style src="./launch-manifest-common.less" scoped lang="less"></style>
 <style scoped lang="less">
 	.header {

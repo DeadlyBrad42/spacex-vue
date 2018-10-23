@@ -1,27 +1,51 @@
 <template>
 	<div class="toolbox">
 		<div>
-			<div class="refresh">
-				<a href="#">Refresh</a>
+			<div v-on:click="reloadList()" class="refresh">
+				<a>Refresh</a>
 			</div>
 		</div>
 
-		<app-checkbox id="landed" :checked="false">
-			Land Success
-		</app-checkbox>
+		<div class="checkbox">
+			<input type="checkbox" id="landed" v-model="options.landed" />
+			<label for="landed">Land success</label>
+		</div>
+		<div class="checkbox">
+			<input type="checkbox" id="reused" v-model="options.reused" />
+			<label for="reused">Reused</label>
+		</div>
+		<div class="checkbox">
+			<input type="checkbox" id="reddit" v-model="options.attachment" />
+			<label for="reddit">With Reddit</label>
+		</div>
 
-		<app-checkbox id="reused" :checked="false">
-			Reused
-		</app-checkbox>
 
-		<app-checkbox id="attachment" :checked="false">
-			With Reddit
-		</app-checkbox>
 	</div>
 </template>
 
 <script>
 module.exports = {
+	props: {
+		options: {
+			validator: function (data) {
+				return data.hasOwnProperty('landed')
+					&& data.hasOwnProperty('reused')
+					&& data.hasOwnProperty('attachment');
+			}
+		}
+	},
+	data: function () {
+		return {
+			landed: this.options.landed,
+			reused: this.options.reused,
+			attachment: this.options.attachment,
+		};
+	},
+	methods: {
+		reloadList() {
+			this.$emit('reload-data');
+		}
+	}
 }
 </script>
 
@@ -59,6 +83,43 @@ module.exports = {
 			text-indent: 100%;
 			white-space: nowrap;
 			overflow: hidden;
+			cursor: pointer;
+		}
+
+		.checkbox {
+			text-transform: uppercase;
+			margin: 0 0 0 1rem;
+
+			// Hide standard checkbox input
+			input[type="checkbox"] {
+				display: none;
+			}
+
+			// Utilize label for styling custom checkbox
+			input[type="checkbox"] + label {
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+
+				&::before {
+					border: 1px solid #FFFFFF;
+					border-radius: 4px;
+					content: '';
+					display: inline-block;
+					width: 1rem;
+					height: 1rem;
+					padding: 0.15rem;
+					margin: 0.5rem;
+				}
+			}
+
+			// Show checkmark
+			input[type="checkbox"]:checked + label::before {
+				background-image: url('../../assets/images/checkmark.svg');
+				background-origin: content-box;
+				background-size: 1rem 1rem;
+				background-repeat: no-repeat;
+			}
 		}
 	}
 </style>

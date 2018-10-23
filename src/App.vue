@@ -4,8 +4,10 @@
 			<h1>SpaceX Launches</h1>
 
 			<div class="launches">
-				<toolbox>
-				</toolbox>
+				<toolbox
+					v-bind:options.sync="filterOptions"
+					v-on:reload-data="loadData"
+				></toolbox>
 
 				<launch-manifest
 					v-bind:launches="filteredLaunches"
@@ -46,7 +48,7 @@ export default {
 					this.launches = json;
 				});
 			});
-		}
+		},
 	},
 	computed: {
 		filteredLaunches: function () {
@@ -56,19 +58,28 @@ export default {
 				// Sortable options
 				let landedSucessfully = launch.launch_success;
 				let wasReused = launch.reuse.capsule
-						|| launch.reuse.core
-						|| launch.reuse.fairings
-						|| launch.reuse.side_core1
-						|| launch.reuse.side_core2;
+					|| launch.reuse.core
+					|| launch.reuse.fairings
+					|| launch.reuse.side_core1
+					|| launch.reuse.side_core2;
 				let isReddit = false;
 
-				let launchDate = new Date(launch.launch_date_utc);
+				for (const key in launch.links) {
+					if (key.startsWith('reddit_')) {
+						isReddit = true;
+						break;
+					}
+				}
 
+				// If launch meets filter criteria...
 				if (
 					(!this.filterOptions.landed || (this.filterOptions.landed && landedSucessfully))
 					&& (!this.filterOptions.reused || (this.filterOptions.reused && wasReused))
 					&& (!this.filterOptions.attachment || (this.filterOptions.attachment && isReddit))
 				) {
+					// ... add it to the filteredLaunches array
+					let launchDate = new Date(launch.launch_date_utc);
+
 					filteredLaunches.push({
 						badgeUrl: launch.links.mission_patch_small || '../../assets/images/placeholder.png',
 						rocketName: launch.rocket.rocket_name,
@@ -76,6 +87,7 @@ export default {
 						date: `${launchDate.getMonth()}/${launchDate.getDate()}/${launchDate.getFullYear()}`,
 						details: launch.details,
 						id: launch.flight_number,
+						article: launch.links.article_link || launch.links.wikipedia || '',
 
 						landedSucessfully: landedSucessfully,
 						wasReused: wasReused
@@ -104,6 +116,7 @@ export default {
 		font-family: 'Geomanist', 'Arial', 'Calibri', sans-serif;
 		background-image: url('assets/images/background.jpg');
 		background-size: cover;
+		background-attachment: fixed;
 	}
 
 	.content {
