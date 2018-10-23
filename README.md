@@ -13,4 +13,4 @@ To keep things simple, the App Component is comprised of a **Toolbox Component**
 ## Future Developments
 As this was my first Vue.js project, there are several changes I'd like to explore for future developments:
 * Moving the logic out of the App Component. I'd like to explore using a cleaner repository pattern here rather than hardcoding the API & filter options.
-* I would like to research alternative ways to define datamodels & validate the data passing through components. Since I am not (yet!) too familair with Vue.js, I opted to not stray far from the beaten path, but I would be interested to use it with something like TypeScript's strongly-typed classes, or even find other third-party vanilla-JavaScrit solutions.
+* I would like to research alternative ways to define datamodels & validate the data passing through components. Since I am not (yet!) too familiar with Vue.js, I opted to not stray far from the beaten path, but I would be interested to use it with something like TypeScript's strongly-typed classes, or even find other third-party vanilla-JavaScript solutions.
